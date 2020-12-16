@@ -1,7 +1,7 @@
-package com.edu.agh.gg.transform;
+package pl.edu.agh.gg.transform;
 
-import com.edu.agh.gg.model.GraphModel;
-import com.edu.agh.gg.model.*;
+import pl.edu.agh.gg.model.GraphModel;
+import pl.edu.agh.gg.model.GraphNode;
 
 public abstract class Transformation {
 

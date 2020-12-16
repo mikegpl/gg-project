@@ -1,6 +1,6 @@
-package com.edu.agh.gg.visualization;
+package pl.edu.agh.gg.visualization;
 
-import com.edu.agh.gg.model.GraphModel;
+import pl.edu.agh.gg.model.GraphModel;
 
 public class Visualizer {
     private GraphModel graph;

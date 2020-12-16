@@ -1,11 +1,11 @@
-package com.edu.agh.gg;
+package pl.edu.agh.gg;
 
-import com.edu.agh.gg.model.Coordinates;
-import com.edu.agh.gg.model.ENode;
-import com.edu.agh.gg.model.GraphModel;
-import com.edu.agh.gg.model.GraphNode;
-import com.edu.agh.gg.model.InteriorNode;
-import com.edu.agh.gg.visualization.Visualizer;
+import pl.edu.agh.gg.model.Coordinates;
+import pl.edu.agh.gg.model.ENode;
+import pl.edu.agh.gg.model.GraphModel;
+import pl.edu.agh.gg.model.GraphNode;
+import pl.edu.agh.gg.model.InteriorNode;
+import pl.edu.agh.gg.visualization.Visualizer;
 
 import java.util.ArrayList;
 import java.util.List;
