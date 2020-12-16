@@ -1,10 +1,8 @@
 package com.edu.agh.gg;
 
-import com.edu.agh.gg.model.Coordinates;
-import com.edu.agh.gg.model.ENode;
-import com.edu.agh.gg.model.GraphModel;
-import com.edu.agh.gg.model.GraphNode;
-import com.edu.agh.gg.transform.P1;
+import com.edu.agh.gg.model.*;
+import com.edu.agh.gg.transform.*;
+import com.edu.agh.gg.transform.Transformation;
 import com.edu.agh.gg.visualization.Visualizer;
 
 import java.util.ArrayList;
@@ -15,10 +13,20 @@ public class Main {
     public static void main(String[] args) {
         GraphModel graphModel = generateGraphModel();
 
-        new P1().transform(graphModel, graphModel.getGraphNode("e1").get());
+        Transformation p1 = new P1();
+        Transformation p2 = new P2();
+
+        if (p1.isApplicable(graphModel, graphModel.getGraphNode("e1").get())) {
+            p1.transform(graphModel, graphModel.getGraphNode("e1").get());
+        }
+
+        if (p2.isApplicable(graphModel, graphModel.getGraphNode("e1i1").get())) {
+            p2.transform(graphModel, graphModel.getGraphNode("e1i1").get());
+        }
 
         Visualizer visualizer = new Visualizer(graphModel);
-        visualizer.visualizeUpTo(2);
+        visualizer.visualizeUpTo(3);
+
     }
 
     private static GraphModel generateGraphModel() {

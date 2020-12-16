@@ -45,7 +45,7 @@ public class GraphModel extends MultiGraph {
         GraphEdge graphEdge = new GraphEdge(id, new Pair<>(n1, n2), (n1.getLevel() + n2.getLevel()) / 2);
         Edge edge = this.addEdge(graphEdge.getId(), n1, n2);
         edge.setAttribute(ElementAttributes.LEVEL, (n1.getLevel() + n2.getLevel()) / 2);
-        if (n1 instanceof INode || n2 instanceof INode) {
+        if (n1 instanceof InteriorNode || n2 instanceof InteriorNode) {
             edge.setAttribute(ElementAttributes.STYLE, ElementAttributes.BLUE);
         }
         edges.put(graphEdge.getId(), graphEdge);
@@ -55,11 +55,22 @@ public class GraphModel extends MultiGraph {
     public GraphEdge insertGraphEdge(GraphEdge graphEdge) {
         Edge edge = this.addEdge(graphEdge.getId(), graphEdge.getNode0().getId(), graphEdge.getNode1().getId());
         edge.setAttribute(ElementAttributes.LEVEL, graphEdge.getLevel());
-        if (graphEdge.getNode0() instanceof INode || graphEdge.getNode1() instanceof INode) {
+        if (graphEdge.getNode0() instanceof InteriorNode || graphEdge.getNode1() instanceof InteriorNode) {
             edge.setAttribute(ElementAttributes.STYLE, ElementAttributes.BLUE);
         }
         edges.put(graphEdge.getId(), graphEdge);
         return graphEdge;
+    }
+
+    public boolean areNodesConnected(GraphNode n1, GraphNode n2) {
+        return edges.values().stream()
+                .anyMatch(egde -> checkEdgeEndNodes(egde, n1, n2));
+    }
+
+    public boolean checkEdgeEndNodes(GraphEdge edge, GraphNode n1, GraphNode n2) {
+        final Pair<GraphNode, GraphNode> edgeNodes = edge.getEdgeNodes();
+        return (edgeNodes.getValue0() == n1 && edgeNodes.getValue1() == n2)
+                || (edgeNodes.getValue0() == n2 && edgeNodes.getValue1() == n1);
     }
 
     public void deleteGraphEdge(String id){
