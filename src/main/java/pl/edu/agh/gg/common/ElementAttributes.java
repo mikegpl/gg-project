@@ -1,4 +1,4 @@
-package com.edu.agh.gg.common;
+package pl.edu.agh.gg.common;
 
 public class ElementAttributes {
     public static final String STYLESHEET = "ui.stylehseet";

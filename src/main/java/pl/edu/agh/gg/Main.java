@@ -1,9 +1,13 @@
-package com.edu.agh.gg;
+package pl.edu.agh.gg;
 
-import com.edu.agh.gg.model.*;
-import com.edu.agh.gg.transform.*;
-import com.edu.agh.gg.transform.Transformation;
-import com.edu.agh.gg.visualization.Visualizer;
+import pl.edu.agh.gg.transform.P2;
+import pl.edu.agh.gg.transform.Transformation;
+import pl.edu.agh.gg.visualization.Visualizer;
+import pl.edu.agh.gg.model.Coordinates;
+import pl.edu.agh.gg.model.ENode;
+import pl.edu.agh.gg.model.GraphModel;
+import pl.edu.agh.gg.model.GraphNode;
+import pl.edu.agh.gg.transform.P1;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,7 +33,7 @@ public class Main {
 
     }
 
-    private static GraphModel generateGraphModel() {
+    public static GraphModel generateGraphModel() {
         GraphModel graphModel = new GraphModel("Main");
 
         List<GraphNode> nodes = new ArrayList<>();

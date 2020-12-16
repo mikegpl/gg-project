@@ -1,6 +1,6 @@
-package com.edu.agh.gg.transform;
+package pl.edu.agh.gg.transform;
 
-import com.edu.agh.gg.model.*;
+import pl.edu.agh.gg.model.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,6 +30,7 @@ public class P2 extends Transformation {
 
         List<GraphNode> nodes = new ArrayList<>();
 
+        // Create nodes one level below
         GraphNode newInterior1 = new InteriorNode(graphModel, getNodeName(interiorNode, "i1"), new Coordinates(x - 1.0, -0.25, nextLevel));
         GraphNode newInterior2 = new InteriorNode(graphModel, getNodeName(interiorNode, "i2"), new Coordinates(x + 1.0, -0.25, nextLevel));
 
@@ -40,6 +41,7 @@ public class P2 extends Transformation {
         GraphNode n5 = new ENode(graphModel, getNodeName(interiorNode, "n5"), new Coordinates(x + 0.0, y - 2.0, nextLevel));
         GraphNode n6 = new ENode(graphModel, getNodeName(interiorNode, "n6"), new Coordinates(x - 2.0, y - 2.0, nextLevel));
 
+        // Add nodes for visualizing edges
         nodes.add(graphModel.insertGraphNode(newInterior1));
         nodes.add(graphModel.insertGraphNode(newInterior2));
         nodes.add(graphModel.insertGraphNode(n1));
@@ -49,6 +51,7 @@ public class P2 extends Transformation {
         nodes.add(graphModel.insertGraphNode(n5));
         nodes.add(graphModel.insertGraphNode(n6));
 
+        // Insert edges for visualization
         graphModel.insertGraphEdge(getEdgeName(interiorNode, nodes.get(0)), interiorNode, nodes.get(0));
         graphModel.insertGraphEdge(getEdgeName(interiorNode, nodes.get(1)), interiorNode, nodes.get(1));
         graphModel.insertGraphEdge(getEdgeName(nodes.get(0), nodes.get(2)), nodes.get(0), nodes.get(2));
@@ -69,6 +72,7 @@ public class P2 extends Transformation {
         graphModel.insertGraphEdge(getEdgeName(nodes.get(4), nodes.get(5)), nodes.get(4), nodes.get(5));
 
 
+        // Insert edges for transformations
         newInterior1.addNeighbourENode(n1);
         newInterior1.addNeighbourENode(n2);
         newInterior1.addNeighbourENode(n5);

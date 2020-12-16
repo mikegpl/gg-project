@@ -1,4 +1,4 @@
-package com.edu.agh.gg.model;
+package pl.edu.agh.gg.model;
 
 import org.graphstream.graph.implementations.AbstractEdge;
 import org.javatuples.Pair;

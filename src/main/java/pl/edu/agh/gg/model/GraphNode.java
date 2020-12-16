@@ -1,6 +1,6 @@
-package com.edu.agh.gg.model;
+package pl.edu.agh.gg.model;
 
-import com.edu.agh.gg.common.ElementAttributes;
+import pl.edu.agh.gg.common.ElementAttributes;
 import org.graphstream.graph.Edge;
 import org.graphstream.graph.Node;
 import org.graphstream.graph.implementations.AbstractGraph;
