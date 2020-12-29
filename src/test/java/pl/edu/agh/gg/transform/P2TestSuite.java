@@ -15,9 +15,9 @@ public class P2TestSuite {
         Transformation p1 = new P1();
         Transformation p2 = new P2();
 
-        p1.transform(graphModel, graphModel.getGraphNode("e1").get());
+        p1.transform(graphModel, graphModel.getGraphNode("e1").get(), false);
 
-        assertTrue(p2.isApplicable(graphModel, graphModel.getGraphNode("e1i1").get()));
+        assertTrue(p2.isApplicable(graphModel, graphModel.getGraphNode("e1i1").get(), false));
     }
 
 }
