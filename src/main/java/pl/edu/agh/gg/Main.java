@@ -20,16 +20,24 @@ public class Main {
         Transformation p1 = new P1();
         Transformation p2 = new P2();
 
-        if (p1.isApplicable(graphModel, graphModel.getGraphNode("e1").get())) {
-            p1.transform(graphModel, graphModel.getGraphNode("e1").get());
+        if (p1.isApplicable(graphModel, graphModel.getGraphNode("e1").get(), false)) {
+            p1.transform(graphModel, graphModel.getGraphNode("e1").get(), false);
         }
 
-        if (p2.isApplicable(graphModel, graphModel.getGraphNode("e1i1").get())) {
-            p2.transform(graphModel, graphModel.getGraphNode("e1i1").get());
+        if (p2.isApplicable(graphModel, graphModel.getGraphNode("e1i1").get(), false)) {
+            p2.transform(graphModel, graphModel.getGraphNode("e1i1").get(), false);
+        }
+
+        if (p2.isApplicable(graphModel, graphModel.getGraphNode("e1i1i1").get(), false)) {
+            p2.transform(graphModel, graphModel.getGraphNode("e1i1i1").get(), false);
+        }
+
+        if (p2.isApplicable(graphModel, graphModel.getGraphNode("e1i1i2").get(), true)) {
+            p2.transform(graphModel, graphModel.getGraphNode("e1i1i2").get(), true);
         }
 
         Visualizer visualizer = new Visualizer(graphModel);
-        visualizer.visualizeUpTo(3);
+        visualizer.visualize(4);
 
     }
 

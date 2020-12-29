@@ -10,16 +10,16 @@ import org.graphstream.graph.implementations.SingleNode;
 import java.util.*;
 
 public abstract class GraphNode extends SingleNode {
-    private final String symbol;
+    private Character symbol;
     private final Coordinates coordinates;
 
     private final List<GraphNode> adjacentENodes = new ArrayList<>();
 
-    protected GraphNode(AbstractGraph graph, String id, String symbol, double xCoordinate, double yCoordinate, double level) {
+    protected GraphNode(AbstractGraph graph, String id, Character symbol, double xCoordinate, double yCoordinate, double level) {
         this(graph, id, symbol, new Coordinates(xCoordinate, yCoordinate, level));
     }
 
-    protected GraphNode(AbstractGraph graph, String id, String symbol, Coordinates coordinates) {
+    protected GraphNode(AbstractGraph graph, String id, Character symbol, Coordinates coordinates) {
         super(graph, id);
         super.setAttribute(ElementAttributes.FROZEN_LAYOUT);
         this.symbol = symbol;
@@ -34,8 +34,16 @@ public abstract class GraphNode extends SingleNode {
         return adjacentENodes.toArray(new GraphNode[0]);
     }
 
-    public String getSymbol() {
+    public Character getSymbol() {
         return symbol;
+    }
+
+    public boolean isSymbolUpperCase() {
+        return Character.isUpperCase(symbol);
+    }
+
+    public void symbolToLowerCase() {
+        symbol = Character.toLowerCase(symbol);
     }
 
     public double getXCoordinate() {
