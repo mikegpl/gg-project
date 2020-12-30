@@ -1,13 +1,8 @@
 package pl.edu.agh.gg.transform;
 
-import pl.edu.agh.gg.model.Coordinates;
-import pl.edu.agh.gg.model.ENode;
-import pl.edu.agh.gg.model.GraphModel;
-import pl.edu.agh.gg.model.GraphNode;
-import pl.edu.agh.gg.model.InteriorNode;
+import pl.edu.agh.gg.model.*;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 import static pl.edu.agh.gg.model.ENode.INIT_SYMBOL;
 
@@ -33,11 +28,11 @@ public class P1 extends Transformation {
         List<GraphNode> nodes = new ArrayList<>();
 
         // Create nodes one level below
-        GraphNode newInterior = new InteriorNode(graphModel, getNodeName(interiorNode, "i1"), new Coordinates(x, y, nextLevel));
-        GraphNode e1 = new ENode(graphModel, getNodeName(interiorNode, "e1"), new Coordinates(x - 2.0, y + 2.0, nextLevel));
-        GraphNode e2 = new ENode(graphModel, getNodeName(interiorNode, "e2"), new Coordinates(x + 2.0, y + 2.0, nextLevel));
-        GraphNode e3 = new ENode(graphModel, getNodeName(interiorNode, "e3"), new Coordinates(x + 2.0, y - 2.0, nextLevel));
-        GraphNode e4 = new ENode(graphModel, getNodeName(interiorNode, "e4"), new Coordinates(x - 2.0, y - 2.0, nextLevel));
+        GraphNode newInterior = new InteriorNode(graphModel, getNodeName(interiorNode, "i1"), Coordinates.createCoordinatesWithOffset(x, y, nextLevel));
+        GraphNode e1 = new ENode(graphModel, getNodeName(interiorNode, "e1"), Coordinates.createCoordinatesWithOffset(x - 2.0, y + 2.0, nextLevel));
+        GraphNode e2 = new ENode(graphModel, getNodeName(interiorNode, "e2"), Coordinates.createCoordinatesWithOffset(x + 2.0, y + 2.0, nextLevel));
+        GraphNode e3 = new ENode(graphModel, getNodeName(interiorNode, "e3"), Coordinates.createCoordinatesWithOffset(x + 2.0, y - 2.0, nextLevel));
+        GraphNode e4 = new ENode(graphModel, getNodeName(interiorNode, "e4"), Coordinates.createCoordinatesWithOffset(x - 2.0, y - 2.0, nextLevel));
 
         // Add nodes for visualizing edges
         nodes.add(graphModel.insertGraphNode(newInterior));

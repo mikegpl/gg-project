@@ -1,6 +1,8 @@
 package pl.edu.agh.gg.model;
 
+import org.javatuples.Pair;
 import pl.edu.agh.gg.common.ElementAttributes;
+
 import org.graphstream.graph.Edge;
 import org.graphstream.graph.Node;
 import org.graphstream.graph.implementations.AbstractGraph;
@@ -58,17 +60,22 @@ public abstract class GraphNode extends SingleNode {
         return coordinates.getLevel();
     }
 
-    public Coordinates getCoordinates(){
+    public Coordinates getCoordinates() {
         return coordinates;
     }
 
     @Override
     public <T extends Edge> T getEdgeBetween(Node node) {
-        for(AbstractNode e : this.neighborMap.keySet()){
-            if(Objects.equals(e.getId(), node.getId())){
+        for (AbstractNode e : this.neighborMap.keySet()) {
+            if (Objects.equals(e.getId(), node.getId())) {
                 return super.getEdgeBetween(e);
             }
         }
         return null;
+    }
+
+    @Override
+    public String toString() {
+        return String.format("mockGraph.add(new Pair<>('%s', %s));", symbol, coordinates.toString());
     }
 }
