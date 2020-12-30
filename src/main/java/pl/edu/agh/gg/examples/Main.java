@@ -28,6 +28,10 @@ public class Main {
             p2.transform(graphModel, graphModel.getGraphNode("e1i1i2").get(), true);
         }
 
+        if (p2.isApplicable(graphModel, graphModel.getGraphNode("e1i1i2i1").get(), true)) {
+            p2.transform(graphModel, graphModel.getGraphNode("e1i1i2i1").get(), true);
+        }
+
         Visualizer visualizer = new Visualizer(graphModel);
         visualizer.visualize();
 

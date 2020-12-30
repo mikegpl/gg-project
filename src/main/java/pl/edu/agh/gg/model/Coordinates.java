@@ -8,8 +8,8 @@ public final class Coordinates {
     private static final double OFFSET_Y = -1.5;
     private static final double EPSILON = 0.0005;
 
-    private final double x;
-    private final double y;
+    private double x;
+    private double y;
     private final double level;
 
     public static Coordinates createCoordinatesWithOffset(double x, double y, double level) {
@@ -32,6 +32,14 @@ public final class Coordinates {
 
     public double getY() {
         return y;
+    }
+
+    public void setX(double x) {
+        this.x = x;
+    }
+
+    public void setY(double y) {
+        this.y = y;
     }
 
     public double getLevel() {

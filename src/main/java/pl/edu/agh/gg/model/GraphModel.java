@@ -10,6 +10,10 @@ import org.javatuples.Pair;
 import java.util.*;
 
 public class GraphModel extends MultiGraph {
+
+    private static final double conflictMoveX = -0.1;
+    private static final double conflictMoveY = -0.1;
+
     private Map<String, GraphNode> nodes = new HashMap<>();
     private Map<String, GraphEdge> edges = new HashMap<>();
 
@@ -18,6 +22,11 @@ public class GraphModel extends MultiGraph {
     }
 
     public GraphNode insertGraphNode(GraphNode graphNode) {
+        if (isNodeHereAlready(graphNode)) {
+            Coordinates coords = graphNode.getCoordinates();
+            coords.setX(coords.getX() + conflictMoveX);
+            coords.setY(coords.getY() + conflictMoveY);
+        }
         Node node = this.addNode(graphNode.getId());
         node.setAttribute(ElementAttributes.FROZEN_LAYOUT);
         node.setAttribute(ElementAttributes.XY, graphNode.getXCoordinate(), graphNode.getYCoordinate());
@@ -118,5 +127,12 @@ public class GraphModel extends MultiGraph {
                 .forEach(graphModel::insertGraphEdge);
 
         return graphModel;
+    }
+
+    private boolean isNodeHereAlready(GraphNode node) {
+        for (GraphNode n : nodes.values()) {
+            if (n.getCoordinates().equals(node.getCoordinates())) return true;
+        }
+        return false;
     }
 }
