@@ -1,13 +1,11 @@
 package pl.edu.agh.gg.transform;
 
-import pl.edu.agh.gg.model.GraphModel;
-import pl.edu.agh.gg.model.GraphNode;
-import pl.edu.agh.gg.model.InteriorNode;
+import pl.edu.agh.gg.model.*;
 
 public interface TransformationMerge {
 
-    boolean isApplicable(GraphModel graph, GraphNode interior);
+    boolean isApplicable(GraphModel graph, GraphNode interiorNode1, GraphNode interiorNode2, boolean isHorizontal);
 
-    void transform(GraphModel graph, InteriorNode interior1, GraphNode interior2);
+    void transform(GraphModel graph, GraphNode interiorNode1, GraphNode interiorNode2, boolean isHorizontal);
 
 }

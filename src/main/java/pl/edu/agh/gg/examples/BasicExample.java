@@ -1,4 +1,4 @@
-package pl.edu.agh.gg;
+package pl.edu.agh.gg.examples;
 
 import pl.edu.agh.gg.model.Coordinates;
 import pl.edu.agh.gg.model.ENode;
@@ -10,7 +10,7 @@ import pl.edu.agh.gg.visualization.Visualizer;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Basic {
+public class BasicExample {
     public static void main(String[] args) {
         GraphModel graphModel = generateGraphModel();
         Visualizer visualizer = new Visualizer(graphModel);

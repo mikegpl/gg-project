@@ -25,25 +25,25 @@ public class P2 extends Transformation {
         List<GraphNode> nodes = new ArrayList<>();
 
         // Create nodes one level below
-        GraphNode n1 = new ENode(graphModel, getNodeName(interiorNode, "n1"), new Coordinates(oldNodes[0].getXCoordinate(), oldNodes[0].getYCoordinate(), nextLevel));
+        GraphNode n1 = new ENode(graphModel, getNodeName(interiorNode, "n1"), Coordinates.createCoordinatesWithOffset(oldNodes[0].getXCoordinate(), oldNodes[0].getYCoordinate(), nextLevel));
         double n2XCoordinate = (oldNodes[0].getXCoordinate() + oldNodes[1].getXCoordinate()) / 2.;
         double n2YCoordinate = (oldNodes[0].getYCoordinate() + oldNodes[1].getYCoordinate()) / 2.;
-        GraphNode n2 = new ENode(graphModel, getNodeName(interiorNode, "n2"), new Coordinates(n2XCoordinate, n2YCoordinate, nextLevel));
-        GraphNode n3 = new ENode(graphModel, getNodeName(interiorNode, "n3"), new Coordinates(oldNodes[1].getXCoordinate(), oldNodes[1].getYCoordinate(), nextLevel));
-        GraphNode n4 = new ENode(graphModel, getNodeName(interiorNode, "n4"), new Coordinates(oldNodes[2].getXCoordinate(), oldNodes[2].getYCoordinate(), nextLevel));
+        GraphNode n2 = new ENode(graphModel, getNodeName(interiorNode, "n2"), Coordinates.createCoordinatesWithOffset(n2XCoordinate, n2YCoordinate, nextLevel));
+        GraphNode n3 = new ENode(graphModel, getNodeName(interiorNode, "n3"), Coordinates.createCoordinatesWithOffset(oldNodes[1].getXCoordinate(), oldNodes[1].getYCoordinate(), nextLevel));
+        GraphNode n4 = new ENode(graphModel, getNodeName(interiorNode, "n4"), Coordinates.createCoordinatesWithOffset(oldNodes[2].getXCoordinate(), oldNodes[2].getYCoordinate(), nextLevel));
         double n5XCoordinate = (oldNodes[2].getXCoordinate() + oldNodes[3].getXCoordinate()) / 2.;
         double n5YCoordinate = (oldNodes[2].getYCoordinate() + oldNodes[3].getYCoordinate()) / 2.;
-        GraphNode n5 = new ENode(graphModel, getNodeName(interiorNode, "n5"), new Coordinates(n5XCoordinate, n5YCoordinate, nextLevel));
-        GraphNode n6 = new ENode(graphModel, getNodeName(interiorNode, "n6"), new Coordinates(oldNodes[3].getXCoordinate(), oldNodes[3].getYCoordinate(), nextLevel));
+        GraphNode n5 = new ENode(graphModel, getNodeName(interiorNode, "n5"), Coordinates.createCoordinatesWithOffset(n5XCoordinate, n5YCoordinate, nextLevel));
+        GraphNode n6 = new ENode(graphModel, getNodeName(interiorNode, "n6"), Coordinates.createCoordinatesWithOffset(oldNodes[3].getXCoordinate(), oldNodes[3].getYCoordinate(), nextLevel));
 
 
         double I1XCoordinate = !isHorizontal ? (n1.getXCoordinate() + n2.getXCoordinate()) / 2. : (n1.getXCoordinate() + n6.getXCoordinate()) / 2.;
         double I1YCoordinate = !isHorizontal ? (n1.getYCoordinate() + n6.getYCoordinate()) / 2. : (n1.getYCoordinate() + n2.getYCoordinate()) / 2.;
-        GraphNode newInterior1 = new InteriorNode(graphModel, getNodeName(interiorNode, "i1"), new Coordinates(I1XCoordinate, I1YCoordinate, nextLevel));
+        GraphNode newInterior1 = new InteriorNode(graphModel, getNodeName(interiorNode, "i1"), Coordinates.createCoordinatesWithoutOffset(I1XCoordinate, I1YCoordinate, nextLevel));
 
         double I2XCoordinate = !isHorizontal ? (n2.getXCoordinate() + n3.getXCoordinate()) / 2. : (n2.getXCoordinate() + n5.getXCoordinate()) / 2.;
         double I2YCoordinate = !isHorizontal ? (n2.getYCoordinate() + n5.getYCoordinate()) / 2. : (n2.getYCoordinate() + n3.getYCoordinate()) / 2.;
-        GraphNode newInterior2 = new InteriorNode(graphModel, getNodeName(interiorNode, "i2"), new Coordinates(I2XCoordinate, I2YCoordinate, nextLevel));
+        GraphNode newInterior2 = new InteriorNode(graphModel, getNodeName(interiorNode, "i2"), Coordinates.createCoordinatesWithoutOffset(I2XCoordinate, I2YCoordinate, nextLevel));
 
         // Add nodes for visualizing edges
         nodes.add(graphModel.insertGraphNode(newInterior1));

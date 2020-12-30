@@ -3,9 +3,22 @@ package pl.edu.agh.gg.model;
 import java.util.Objects;
 
 public final class Coordinates {
+
+    private static final double OFFSET_X = 0.8;
+    private static final double OFFSET_Y = -1.5;
+    private static final double EPSILON = 0.0005;
+
     private final double x;
     private final double y;
     private final double level;
+
+    public static Coordinates createCoordinatesWithOffset(double x, double y, double level) {
+        return new Coordinates(x + level * OFFSET_X, y + level * OFFSET_Y, level);
+    }
+
+    public static Coordinates createCoordinatesWithoutOffset(double x, double y, double level) {
+        return new Coordinates(x, y, level);
+    }
 
     public Coordinates(double x, double y, double level) {
         this.x = x;
@@ -31,7 +44,7 @@ public final class Coordinates {
 
     public static double distance(Coordinates p1, Coordinates p2) {
         double dx = p1.getX() - p2.getX();
-        double dy = p1.getY()- p2.getY();
+        double dy = p1.getY() - p2.getY();
         return Math.sqrt(dx * dx + dy * dy);
     }
 
@@ -50,13 +63,18 @@ public final class Coordinates {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Coordinates coordinates = (Coordinates) o;
-        return Double.compare(coordinates.x, x) == 0 &&
-                Double.compare(coordinates.y, y) == 0 &&
+        return Math.abs(coordinates.x - x) < EPSILON &&
+                Math.abs(coordinates.y - y) < EPSILON &&
                 coordinates.level == level;
     }
 
     @Override
     public int hashCode() {
         return Objects.hash(x, y, level);
+    }
+
+    @Override
+    public String toString() {
+        return String.format("new Coordinates(%s,%s,%s)", x, y, level);
     }
 }
