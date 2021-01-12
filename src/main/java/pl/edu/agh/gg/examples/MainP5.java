@@ -7,7 +7,7 @@ import pl.edu.agh.gg.visualization.Visualizer;
 
 public class MainP5 {
     public static void main(String[] args) {
-        GraphModel graphModel = generateGraphModel3();
+        GraphModel graphModel = generateGraphModel2();
 
         Transformation p5 = new P5();
 

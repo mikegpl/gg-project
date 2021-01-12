@@ -143,7 +143,7 @@ public class P6 extends Transformation {
         // x4 should be the only node to have direct eges with corner nodes. We should find x2-x4 edge first, and then x4-x3 one.
         Optional<Integer> i4Index = Optional.empty();
         for (int i = 0; i < es.length; i++) {
-            if (es[i].hasEdgeBetween(es[(i + 1) % es.length]) && es[i].hasEdgeBetween(es[(i - 1) % es.length])) {
+            if (es[i].hasEdgeBetween(es[(i + 1) % es.length]) && es[i].hasEdgeBetween(es[pythonMod(i - 1, es.length)])) {
                 if (i4Index.isPresent()) {
                     return Optional.empty();
                 } else {
@@ -152,8 +152,11 @@ public class P6 extends Transformation {
             }
         }
 
-        // at this stage i4 should be present
-        int i4 = i4Index.get();
+        int i4;
+        if (!i4Index.isPresent())
+            return Optional.empty();
+        else
+            i4 = i4Index.get();
 
         left.x1 = es[(i4 + 2) % es.length];
         left.x2 = es[(i4 + 3) % es.length];
@@ -188,6 +191,11 @@ public class P6 extends Transformation {
         }
 
         return Optional.of(left);
+    }
+
+    private int pythonMod(int a, int b) {
+        int res = a % b;
+        return res < 0 ? a + b : a;
     }
 
     private Coordinates mid(GraphNode a, GraphNode b) {
