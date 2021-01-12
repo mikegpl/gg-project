@@ -5,6 +5,12 @@ import pl.edu.agh.gg.model.GraphNode;
 
 public abstract class Transformation {
 
+    public final void transformIfApplicable(GraphModel graphModel, GraphNode interiorNode, boolean isHorizontal) {
+        if (isApplicable(graphModel, interiorNode, isHorizontal)) {
+            transform(graphModel, interiorNode, isHorizontal);
+        }
+    }
+
     public abstract boolean isApplicable(GraphModel graphModel, GraphNode interiorNode, boolean isHorizontal);
 
     public abstract void transform(GraphModel graphModel, GraphNode interiorNode, boolean isHorizontal);

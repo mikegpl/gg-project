@@ -32,8 +32,8 @@ public abstract class GraphNode extends SingleNode {
         adjacentENodes.add(node);
     }
 
-    public GraphNode[] getAdjacentENodes() {
-        return adjacentENodes.toArray(new GraphNode[0]);
+    public ENode[] getAdjacentENodes() {
+        return adjacentENodes.stream().map(node -> (ENode) node).toArray(ENode[]::new);
     }
 
     public Character getSymbol() {
