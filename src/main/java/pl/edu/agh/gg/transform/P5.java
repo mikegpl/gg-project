@@ -24,6 +24,18 @@ public class P5 extends Transformation {
         if (!(interiorNode instanceof InteriorNode)) {
             return false;
         }
+        for(GraphNode node: interiorNode.getAdjacentENodes()){
+            if (node.getId().charAt(0) != 'e' || node.getId().charAt(0) == 'E'){
+                return false;
+            }
+            //System.out.println(node.getId().charAt(0) == 'e');
+        }
+        for(GraphNode node: interiorNode.getAdjacentENodes()){
+            if (node instanceof InteriorNode){
+                return false;
+            }
+        }
+
         this.interiorNode = (InteriorNode) interiorNode;
         this.leftCache = getLeftEmbedding();
 
