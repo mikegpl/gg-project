@@ -3,7 +3,9 @@ package pl.edu.agh.gg.transform;
 import org.javatuples.Pair;
 import org.junit.Test;
 import pl.edu.agh.gg.common.ElementAttributes;
-import pl.edu.agh.gg.model.*;
+import pl.edu.agh.gg.model.Coordinates;
+import pl.edu.agh.gg.model.GraphModel;
+import pl.edu.agh.gg.model.GraphNode;
 import pl.edu.agh.gg.transform.utils.MockGraphs;
 
 import java.lang.reflect.Field;
@@ -12,47 +14,6 @@ import static org.junit.Assert.*;
 import static pl.edu.agh.gg.examples.MainP6.advancedModel;
 
 public class P6TestSuite {
-
-    static int VALID_GRAPH_MODEL_START_LEVEL = 2;
-
-    static GraphModel firstLevel() {
-        GraphModel graphModel = new GraphModel("P6-test");
-
-        GraphNode i1 = graphModel.insertGraphNode(new InteriorNode(graphModel, "i1", new Coordinates(0, 0, 0)));
-        GraphNode e1 = graphModel.insertGraphNode(new ENode(graphModel, "e1", new Coordinates(-1, 1, 0)));
-        GraphNode e2 = graphModel.insertGraphNode(new ENode(graphModel, "e2", new Coordinates(1, 1, 0)));
-        GraphNode e3 = graphModel.insertGraphNode(new ENode(graphModel, "e3", new Coordinates(-1, -1, 0)));
-        GraphNode e4 = graphModel.insertGraphNode(new ENode(graphModel, "e4", new Coordinates(1, -1, 0)));
-
-        graphModel.insertGraphEdge("i1e1", i1, e1);
-        graphModel.insertGraphEdge("i1e2", i1, e2);
-        graphModel.insertGraphEdge("i1e3", i1, e3);
-        graphModel.insertGraphEdge("i1e4", i1, e4);
-
-        graphModel.insertGraphEdge("e1e2", e1, e2);
-        graphModel.insertGraphEdge("e2e4", e2, e4);
-        graphModel.insertGraphEdge("e3e4", e3, e4);
-        graphModel.insertGraphEdge("e3e1", e3, e1);
-
-        i1.addNeighbourENode(e1);
-        i1.addNeighbourENode(e2);
-        i1.addNeighbourENode(e3);
-        i1.addNeighbourENode(e4);
-
-        e1.addNeighbourENode(e2);
-        e1.addNeighbourENode(e3);
-
-        e2.addNeighbourENode(e1);
-        e2.addNeighbourENode(e4);
-
-        e4.addNeighbourENode(e2);
-        e4.addNeighbourENode(e3);
-
-        e3.addNeighbourENode(e4);
-        e3.addNeighbourENode(e1);
-
-        return graphModel;
-    }
 
     static GraphModel valid() {
         return advancedModel();
