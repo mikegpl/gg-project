@@ -1,11 +1,14 @@
 package pl.edu.agh.gg.transform;
 
+import org.javatuples.Pair;
 import org.junit.Test;
 import pl.edu.agh.gg.common.ElementAttributes;
 import pl.edu.agh.gg.model.*;
+import pl.edu.agh.gg.transform.utils.MockGraphs;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import java.lang.reflect.Field;
+
+import static org.junit.Assert.*;
 import static pl.edu.agh.gg.examples.MainP6.advancedModel;
 
 public class P6TestSuite {
@@ -80,61 +83,85 @@ public class P6TestSuite {
 
     static GraphModel invalidWrongCoords() {
         GraphModel graphModel = valid();
-        graphModel.getGraphNode("i1e14").get().setAttribute(ElementAttributes.XY, 50, 40);
+        GraphNode node = graphModel.getGraphNode("i1e14").get();
+        try {
+            Field coords = node.getClass().getSuperclass().getDeclaredField("coordinates");
+            coords.setAccessible(true);
+            coords.set(node, new Coordinates(50, 50, 1));
+        } catch (Exception e) {
+            System.err.println(e);
+        }
         return graphModel;
     }
 
     static Transformation p6 = new P6();
 
     @Test
-    public void isApplicableP6TransformationTest() {
+    public void isApplicableAcceptsValidModelWithValidStartTest() {
         GraphModel validModel = valid();
-        GraphModel invalidMissingVertexModel = invalidMissingVertex();
-        GraphModel invalidMissingEdgeModel = invalidMissingEdge();
-        GraphModel invalidWrongLabelModel = invalidWrongLabel();
-        GraphModel invalidWrongCoordsModel = invalidWrongCoords();
+        GraphNode validStart = validModel.getGraphNode("i1i4").get();
+        GraphNode invalidStart = validModel.getGraphNode("i1i2").get();
 
-        GraphNode validValidStart = validModel.getGraphNode("i1i4").get();
-        GraphNode validInvalidStart = validModel.getGraphNode("i1i2").get();
-        GraphNode invalidVertexStart = invalidMissingVertexModel.getGraphNode("i1i4").get();
-        GraphNode invalidEdgeStart = invalidMissingEdgeModel.getGraphNode("i1i4").get();
-        GraphNode invalidLabelStart = invalidWrongLabelModel.getGraphNode("i1i4").get();
-        GraphNode invalidCoordsStart = invalidWrongCoordsModel.getGraphNode("e1").get();
-
-        assertFalse(p6.isApplicable(validModel, validInvalidStart, false));
-        assertFalse(p6.isApplicable(invalidMissingVertexModel, invalidVertexStart, false));
-        assertFalse(p6.isApplicable(invalidMissingEdgeModel, invalidEdgeStart, false));
-        assertFalse(p6.isApplicable(invalidWrongCoordsModel, invalidCoordsStart, false));
-
-        assertTrue(p6.isApplicable(invalidWrongLabelModel, invalidLabelStart, false));
-        assertTrue(p6.isApplicable(validModel, validValidStart, false));
+        assertTrue(p6.isApplicable(validModel, validStart, false));
+        assertFalse(p6.isApplicable(validModel, invalidStart, false));
     }
 
     @Test
-    public void transformP6TransformationTest() {
+    public void isApplicableRejectsModelWithMissingVertexTest() {
+        GraphModel invalidMissingVertexModel = invalidMissingVertex();
+        GraphNode validStart = invalidMissingVertexModel.getGraphNode("i1i4").get();
+        assertFalse(p6.isApplicable(invalidMissingVertexModel, validStart, false));
+    }
+
+    @Test
+    public void isApplicableAcceptsModelWithWrongLabels() {
+        GraphModel invalidWrongLabelModel = invalidWrongLabel();
+        GraphNode validStart = invalidWrongLabelModel.getGraphNode("i1i4").get();
+        assertTrue(p6.isApplicable(invalidWrongLabelModel, validStart, false));
+    }
+
+    @Test
+    public void isApplicableRejectsModelWithMissingEdge() {
+        GraphModel invalidMissingEdgeModel = invalidMissingEdge();
+        GraphNode validStart = invalidMissingEdgeModel.getGraphNode("i1i4").get();
+        assertFalse(p6.isApplicable(invalidMissingEdgeModel, validStart, false));
+    }
+
+    @Test
+    public void isApplicableRejectsModelWithWrongCoords() {
+        GraphModel invalidWrongCoordsModel = invalidWrongCoords();
+        GraphNode invalidCoordsStart = invalidWrongCoordsModel.getGraphNode("i1i4").get();
+        assertFalse(p6.isApplicable(invalidWrongCoordsModel, invalidCoordsStart, false));
+    }
+
+
+    @Test
+    public void transformChangesRightLevelTest() {
         GraphModel model = valid();
-        GraphNode startNode = model.getGraphNode("e1").get();
+        GraphNode startNode = model.getGraphNode("i1i4").get();
         p6.transformIfApplicable(model, startNode, false);
 
-        assertTrue(changesIntroducedOnRightLevel(model, VALID_GRAPH_MODEL_START_LEVEL + 1));
-        assertTrue(graphModelNotBroken(model)); // model nie uszkadza większego grafu
-        assertTrue(rightElementsIntroduced(model)); // czy ma wszystkie wierzchołki, krawędzie i etykiety
-        assertTrue(coordinatesValid(model)); // czy współrzędne są poprawne
+        long beforeLevel1Nodes = valid().getGraphNodes().stream().filter(node -> node.getLevel() == 1).count();
+        long afterLevel1Nodes = model.getGraphNodes().stream().filter(node -> node.getLevel() == 1).count();
+
+        long afterLevel2Nodes = model.getGraphNodes().stream().filter(node -> node.getLevel() == 2).count();
+
+        assertEquals(beforeLevel1Nodes, afterLevel1Nodes);
+        assertEquals(13, afterLevel2Nodes);
     }
 
-    private boolean changesIntroducedOnRightLevel(GraphModel model, int level) {
-        return false;
+    @Test
+    public void transformIntroducesVerticesWithRightCoordsTest() {
+        GraphModel model = valid();
+        GraphNode startNode = model.getGraphNode("i1i4").get();
+        p6.transformIfApplicable(model, startNode, false);
+
+        for (Pair<Character, Coordinates> pair : MockGraphs.generateMockP6()) {
+            long count = model.getGraphNodes().stream()
+                    .filter(n -> n.getSymbol() == pair.getValue0() && n.getCoordinates().equals(pair.getValue1())).count();
+
+            assertEquals(pair.toString(), 1L, count);
+        }
     }
 
-    private boolean graphModelNotBroken(GraphModel graphModel) {
-        return false;
-    }
-
-    private boolean rightElementsIntroduced(GraphModel model) {
-        return false;
-    }
-
-    private boolean coordinatesValid(GraphModel model) {
-        return false;
-    }
 }
