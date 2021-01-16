@@ -10,7 +10,8 @@ import pl.edu.agh.gg.transform.utils.MockGraphs;
 import java.lang.reflect.Field;
 
 import static org.junit.Assert.*;
-import static pl.edu.agh.gg.examples.MainP6.*;
+import static pl.edu.agh.gg.examples.MainP6.advancedModel;
+import static pl.edu.agh.gg.examples.MainP6.advancedSkewedModel;
 
 public class P6TestSuite {
 
@@ -29,10 +30,15 @@ public class P6TestSuite {
         return graphModel;
     }
 
-    static GraphModel invalidMissingEdge() {
+    static GraphModel invalidMissingEdge1() {
         GraphModel graphModel = valid();
         graphModel.deleteGraphEdge("i1e24i1e4");
-        // todo - testować inne krawędzie
+        return graphModel;
+    }
+
+    static GraphModel invalidMissingEdge2() {
+        GraphModel graphModel = valid();
+        graphModel.deleteGraphEdge("i1e14i1e1424");
         return graphModel;
     }
 
@@ -70,9 +76,14 @@ public class P6TestSuite {
 
     @Test
     public void isApplicableRejectsModelWithMissingEdge() {
-        GraphModel invalidMissingEdgeModel = invalidMissingEdge();
-        GraphNode validStart = invalidMissingEdgeModel.getGraphNode("i1i4").get();
-        assertFalse(p6.isApplicable(invalidMissingEdgeModel, validStart, false));
+        GraphModel invalidMissingEdgeModel1 = invalidMissingEdge1();
+        GraphNode validStart1 = invalidMissingEdgeModel1.getGraphNode("i1i4").get();
+
+        GraphModel invalidMissingEdgeModel2 = invalidMissingEdge2();
+        GraphNode validStart2 = invalidMissingEdgeModel2.getGraphNode("i1i4").get();
+
+        assertFalse(p6.isApplicable(invalidMissingEdgeModel1, validStart1, false));
+        assertFalse(p6.isApplicable(invalidMissingEdgeModel2, validStart2, false));
     }
 
     @Test
