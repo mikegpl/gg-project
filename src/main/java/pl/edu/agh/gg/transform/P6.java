@@ -3,6 +3,7 @@ package pl.edu.agh.gg.transform;
 import pl.edu.agh.gg.model.*;
 
 import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -129,6 +130,10 @@ public class P6 extends Transformation {
         addEdge(r.x3, r.x34);
     }
 
+    private int countEdgesWithNodes(GraphNode node, ENode[] others) {
+        return (int) Arrays.stream(others).filter(otherNode -> otherNode.hasEdgeBetween(node)).count();
+    }
+
     private Optional<LeftSide> orientate() {
         LeftSide left = new LeftSide();
         left.i = interiorNode;
@@ -138,30 +143,35 @@ public class P6 extends Transformation {
             return Optional.empty();
         }
 
+        Optional<ENode> bottomRight = Optional.empty();
+        List<ENode> diagonalCorners = new LinkedList<>();
+        Optional<ENode> topLeft = Optional.empty();
         // Find x4
-        // I'm assuming es contains enodes ordered clockwise.
-        // x4 should be the only node to have direct eges with corner nodes. We should find x2-x4 edge first, and then x4-x3 one.
-        Optional<Integer> i4Index = Optional.empty();
-        for (int i = 0; i < es.length; i++) {
-            if (es[i].hasEdgeBetween(es[(i + 1) % es.length]) && es[i].hasEdgeBetween(es[pythonMod(i - 1, es.length)])) {
-                if (i4Index.isPresent()) {
-                    return Optional.empty();
-                } else {
-                    i4Index = Optional.of(i);
-                }
+        for (ENode e : es) {
+            switch (countEdgesWithNodes(e, es)) {
+                case 2:
+                    bottomRight = Optional.of(e);
+                    break;
+                case 1:
+                    diagonalCorners.add(e);
+                    break;
+                case 0:
+                    topLeft = Optional.of(e);
+                    break;
+                default:
+                    break;
             }
         }
 
-        int i4;
-        if (!i4Index.isPresent())
+        if (!bottomRight.isPresent() || diagonalCorners.size() != 2 || !topLeft.isPresent()) {
             return Optional.empty();
-        else
-            i4 = i4Index.get();
+        }
 
-        left.x1 = es[(i4 + 2) % es.length];
-        left.x2 = es[(i4 + 3) % es.length];
-        left.x3 = es[(i4 + 1) % es.length];
-        left.x4 = es[i4];
+        diagonalCorners = diagonalCorners.stream().sorted((a, b) -> a.getCoordinates().getY() > b.getCoordinates().getY() ? -1 : 1).collect(Collectors.toList());
+        left.x1 = topLeft.get();
+        left.x2 = diagonalCorners.get(0);
+        left.x3 = diagonalCorners.get(1);
+        left.x4 = bottomRight.get();
 
         // find midpoint nodes
         List<Optional<ENode>> ms = Arrays.asList(
