@@ -24,14 +24,14 @@ public class P5 extends Transformation {
         if (!(interiorNode instanceof InteriorNode)) {
             return false;
         }
-        for(GraphNode node: interiorNode.getAdjacentENodes()){
-            if (node.getId().charAt(0) != 'e' || node.getId().charAt(0) == 'E'){
+        for (GraphNode node : interiorNode.getAdjacentENodes()) {
+            if (node.getId().charAt(0) != 'e' || node.getId().charAt(0) == 'E') {
                 return false;
             }
             //System.out.println(node.getId().charAt(0) == 'e');
         }
-        for(GraphNode node: interiorNode.getAdjacentENodes()){
-            if (node instanceof InteriorNode){
+        for (GraphNode node : interiorNode.getAdjacentENodes()) {
+            if (node instanceof InteriorNode) {
                 return false;
             }
         }
@@ -86,6 +86,8 @@ public class P5 extends Transformation {
         // Add interior-interior edges
         addEdge(l.i, r.i1);
         addEdge(l.i, r.i2);
+        addEdge(l.i, r.i3);
+        addEdge(l.i, r.i4);
 
         // Add interior-edge edges (clockwise)
         addEdge(r.i1, r.x1);
@@ -141,21 +143,73 @@ public class P5 extends Transformation {
 
 
         int i4 = -1;
-        for (int i = 0; i < es.length; ++i) {
-            if (!(es[i].hasEdgeBetween(es[(i + 1) % es.length]))) {
-                if (i4 >= 0) {
-                    return Optional.empty();
-                } else {
-                    i4 = i;
+//        for (int i = 0; i < es.length; ++i) {
+//            if (!(es[i].hasEdgeBetween(es[(i + 1) % es.length]))) {
+//                if (i4 >= 0) {
+//                    return Optional.empty();
+//                } else {
+//                    i4 = i;
+//                }
+//            }
+//        }
+
+        int l1 = 0;
+        int l2 = 0;
+        int s1 = -1;
+        int s2 = -1;
+        for (int i = 0; i < es.length; i++) {
+            int l = 0;
+            for (int j = 0; j < es.length; j++) {
+                if (i != j && es[i].hasEdgeBetween(es[j])) {
+                    l = l + 1;
                 }
             }
+            if (l == 1) {
+                l1 = l1 + 1;
+                if (s1 == -1 && s2 == -1) {
+                    s1 = i;
+                } else if (s2 == -1) {
+                    s2 = i;
+                }
+
+            }
+            if (l == 2) {
+                l2 = l2 + 1;
+            }
         }
-        e.x4 = es[(i4 + 3) % es.length];
-        e.x3 = es[(i4) % es.length];
-        e.x1 = es[(i4 + 1) % es.length];
-        e.x2 = es[(i4 + 2) % es.length];
+
+        if (!(l1 == 2 && l2 == 2)) {
+//            System.out.println(l1);
+//            System.out.println(l2);
+            return Optional.empty();
+        }
+
+//        e.x4 = es[(i4 + 3) % es.length];
+//        e.x3 = es[(i4) % es.length];
+//        e.x1 = es[(i4 + 1) % es.length];
+//        e.x2 = es[(i4 + 2) % es.length];
 
 //        System.out.println(i4);
+//        System.out.println(e.x1.getId());
+//        System.out.println(e.x2.getId());
+//        System.out.println(e.x3.getId());
+//        System.out.println(e.x4.getId());
+
+        e.x1 = es[s1];
+        e.x3 = es[s2];
+        int z = 0;
+        for (int ii = 0; ii < 4; ii++) {
+            if (ii != s1 && ii != s2 && es[ii].hasEdgeBetween(es[s1])) {
+                e.x2 = es[ii];
+            }
+            if (ii != s1 && ii != s2 && !es[ii].hasEdgeBetween(es[s1])) {
+                e.x4 = es[ii];
+            }
+        }
+
+//        System.out.println(s1);
+//        System.out.println(s2);
+//
 //        System.out.println(e.x1.getId());
 //        System.out.println(e.x2.getId());
 //        System.out.println(e.x3.getId());
@@ -167,16 +221,14 @@ public class P5 extends Transformation {
         );
 
 
-
         for (Optional<ENode> m : ms) {
             if (!m.isPresent()) {
 
                 return Optional.empty();
             }
         }
-        //e.x12 = ms.get(0).orElseThrow(() -> new NoSuchElementException("impossible"));
+
         e.x13 = ms.get(0).orElseThrow(() -> new NoSuchElementException("impossible"));
-        //e.x24 = ms.get(2).orElseThrow(() -> new NoSuchElementException("impossible"));
 
         // Make sure there are no additional edges. We know that the ones required are present, so count all edges
         // between points in the embedding and compare the counts.
@@ -206,7 +258,6 @@ public class P5 extends Transformation {
                 .filter(n -> n instanceof ENode)
                 .map(n -> (ENode) n)
                 .collect(Collectors.toList());
-
 
 
         if (candidates.size() < 1) {

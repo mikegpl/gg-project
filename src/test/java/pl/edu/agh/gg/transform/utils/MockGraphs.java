@@ -1,7 +1,6 @@
 package pl.edu.agh.gg.transform.utils;
 
 import org.javatuples.Pair;
-
 import pl.edu.agh.gg.model.Coordinates;
 
 import java.util.ArrayList;
@@ -77,6 +76,43 @@ public class MockGraphs {
         mockGraph.add(new Pair<>('E', new Coordinates(1.0, -1.0, 0.0)));
         mockGraph.add(new Pair<>('E', new Coordinates(0.8, -1.5, 1.0)));
 
+        return mockGraph;
+    }
+
+    public static List<Pair<Character, Coordinates>> generateMockP55() {
+
+        List<Pair<Character, Coordinates>> mockGraph = new ArrayList<>();
+        mockGraph.add(new Pair<>('E', new Coordinates(-0.19999999999999996, -1.5, 1.0)));
+        mockGraph.add(new Pair<>('E', new Coordinates(0.8, -0.5, 1.0)));
+        mockGraph.add(new Pair<>('E', new Coordinates(0.8, -2.5, 1.0)));
+        mockGraph.add(new Pair<>('E', new Coordinates(-1.0, 3.0, 0.0)));
+        mockGraph.add(new Pair<>('E', new Coordinates(-3.0, 1.0, 0.0)));
+        mockGraph.add(new Pair<>('E', new Coordinates(-1.0, 0.0, 0.0)));
+        mockGraph.add(new Pair<>('E', new Coordinates(1.0, 3.0, 0.0)));
+        mockGraph.add(new Pair<>('E', new Coordinates(1.8, -1.5, 1.0)));
+        mockGraph.add(new Pair<>('I', new Coordinates(0.30000000000000004, -1.0, 1.0)));
+        mockGraph.add(new Pair<>('I', new Coordinates(1.3, -1.0, 1.0)));
+        mockGraph.add(new Pair<>('I', new Coordinates(0.30000000000000004, -2.0, 1.0)));
+        mockGraph.add(new Pair<>('I', new Coordinates(1.3, -2.0, 1.0)));
+        mockGraph.add(new Pair<>('E', new Coordinates(-0.19999999999999996, -0.5, 1.0)));
+        mockGraph.add(new Pair<>('E', new Coordinates(1.8, -0.5, 1.0)));
+        mockGraph.add(new Pair<>('E', new Coordinates(-0.19999999999999996, -2.5, 1.0)));
+        mockGraph.add(new Pair<>('E', new Coordinates(1.8, -2.5, 1.0)));
+        mockGraph.add(new Pair<>('i', new Coordinates(0.0, 0.0, 0.0)));
+        mockGraph.add(new Pair<>('I', new Coordinates(2.0, 0.0, 0.0)));
+        mockGraph.add(new Pair<>('I', new Coordinates(0.0, -2.0, 0.0)));
+        mockGraph.add(new Pair<>('I', new Coordinates(-2.0, 0.0, 0.0)));
+        mockGraph.add(new Pair<>('E', new Coordinates(-1.0, 1.0, 0.0)));
+        mockGraph.add(new Pair<>('I', new Coordinates(0.0, 2.0, 0.0)));
+        mockGraph.add(new Pair<>('E', new Coordinates(1.0, 1.0, 0.0)));
+        mockGraph.add(new Pair<>('E', new Coordinates(-1.0, -1.0, 0.0)));
+        mockGraph.add(new Pair<>('E', new Coordinates(1.0, -1.0, 0.0)));
+        mockGraph.add(new Pair<>('E', new Coordinates(3.0, 1.0, 0.0)));
+        mockGraph.add(new Pair<>('E', new Coordinates(3.0, -1.0, 0.0)));
+        mockGraph.add(new Pair<>('E', new Coordinates(-1.0, -3.0, 0.0)));
+        mockGraph.add(new Pair<>('E', new Coordinates(1.0, -3.0, 0.0)));
+        mockGraph.add(new Pair<>('E', new Coordinates(-3.0, -1.0, 0.0)));
+        mockGraph.add(new Pair<>('E', new Coordinates(0.8, -1.5, 1.0)));
         return mockGraph;
     }
 

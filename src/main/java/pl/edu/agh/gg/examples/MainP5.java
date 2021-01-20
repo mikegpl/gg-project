@@ -7,7 +7,7 @@ import pl.edu.agh.gg.visualization.Visualizer;
 
 public class MainP5 {
     public static void main(String[] args) {
-        GraphModel graphModel = generateGraphModel5();
+        GraphModel graphModel = generateGraphModel3();
 
         Transformation p5 = new P5();
 
@@ -15,6 +15,7 @@ public class MainP5 {
             p5.transform(graphModel, graphModel.getGraphNode("i1").get(), false);
         }
         //p5.transform(graphModel, graphModel.getGraphNode("i1").get(), false);
+
 
         Visualizer visualizer = new Visualizer(graphModel);
         visualizer.visualize();
@@ -365,6 +366,94 @@ public class MainP5 {
         e3.addNeighbourENode(e4);
 
         e4.addNeighbourENode(i2);
+        e4.addNeighbourENode(e3);
+
+        return graphModel;
+    }
+
+    public static GraphModel generateGraphModel6() {
+        GraphModel graphModel = new GraphModel("P5");
+
+        GraphNode i1 = graphModel.insertGraphNode(new InteriorNode(graphModel, "i1", new Coordinates(0, 0, 0)));
+        GraphNode e1 = graphModel.insertGraphNode(new ENode(graphModel, "e1", new Coordinates(-1, 1, 0)));
+        GraphNode i2 = graphModel.insertGraphNode(new ENode(graphModel, "e2", new Coordinates(1, 1, 0)));
+        GraphNode e13 = graphModel.insertGraphNode(new ENode(graphModel, "e13", new Coordinates(-1, 0, 0)));
+        GraphNode e3 = graphModel.insertGraphNode(new ENode(graphModel, "e3", new Coordinates(-1, -1, 0)));
+        GraphNode e4 = graphModel.insertGraphNode(new ENode(graphModel, "e4", new Coordinates(1, -1, 0)));
+
+        graphModel.insertGraphEdge("i1e1", i1, e1);
+        graphModel.insertGraphEdge("i1i2", i1, i2);
+        graphModel.insertGraphEdge("i1e3", i1, e3);
+        //graphModel.insertGraphEdge("i1e4", i1, e4);
+
+        graphModel.insertGraphEdge("e1i2", e1, i2);
+        graphModel.insertGraphEdge("e1e13", e1, e13);
+        graphModel.insertGraphEdge("e13e3", e13, e3);
+        graphModel.insertGraphEdge("i2e4", i2, e4);
+        graphModel.insertGraphEdge("e3e4", e3, e4);
+
+        i1.addNeighbourENode(e1);
+        i1.addNeighbourENode(i2);
+        i1.addNeighbourENode(e4);
+        i1.addNeighbourENode(e3);
+
+        e1.addNeighbourENode(i2);
+        e1.addNeighbourENode(e13);
+
+        i2.addNeighbourENode(e1);
+        i2.addNeighbourENode(e4);
+
+        e13.addNeighbourENode(e1);
+        e13.addNeighbourENode(e3);
+
+        e3.addNeighbourENode(e13);
+        e3.addNeighbourENode(e4);
+
+        e4.addNeighbourENode(i2);
+        e4.addNeighbourENode(e3);
+
+        return graphModel;
+    }
+
+    public static GraphModel generateGraphModel7() {
+        GraphModel graphModel = new GraphModel("P5");
+
+        GraphNode i1 = graphModel.insertGraphNode(new InteriorNode(graphModel, "i1", new Coordinates(0, 0, 0)));
+        GraphNode e1 = graphModel.insertGraphNode(new ENode(graphModel, "e1", new Coordinates(-1, 1, 0)));
+        //GraphNode i2 = graphModel.insertGraphNode(new ENode(graphModel, "e2", new Coordinates(1, 1, 0)));
+        GraphNode e13 = graphModel.insertGraphNode(new ENode(graphModel, "e13", new Coordinates(-1, 0, 0)));
+        GraphNode e3 = graphModel.insertGraphNode(new ENode(graphModel, "e3", new Coordinates(-1, -1, 0)));
+        GraphNode e4 = graphModel.insertGraphNode(new ENode(graphModel, "e4", new Coordinates(1, -1, 0)));
+
+        graphModel.insertGraphEdge("i1e1", i1, e1);
+        //graphModel.insertGraphEdge("i1i2", i1, i2);
+        graphModel.insertGraphEdge("i1e3", i1, e3);
+        graphModel.insertGraphEdge("i1e4", i1, e4);
+
+        //graphModel.insertGraphEdge("e1i2", e1, i2);
+        graphModel.insertGraphEdge("e1e13", e1, e13);
+        graphModel.insertGraphEdge("e13e3", e13, e3);
+        //graphModel.insertGraphEdge("i2e4", i2, e4);
+        graphModel.insertGraphEdge("e3e4", e3, e4);
+
+        i1.addNeighbourENode(e1);
+        //i1.addNeighbourENode(i2);
+        i1.addNeighbourENode(e4);
+        i1.addNeighbourENode(e3);
+
+        //e1.addNeighbourENode(i2);
+        e1.addNeighbourENode(e13);
+
+        //i2.addNeighbourENode(e1);
+        //i2.addNeighbourENode(e4);
+
+        e13.addNeighbourENode(e1);
+        e13.addNeighbourENode(e3);
+
+        e3.addNeighbourENode(e13);
+        e3.addNeighbourENode(e4);
+
+        //e4.addNeighbourENode(i2);
         e4.addNeighbourENode(e3);
 
         return graphModel;
